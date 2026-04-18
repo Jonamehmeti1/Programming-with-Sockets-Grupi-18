@@ -27,4 +27,12 @@ server.on("message", (msg, rinfo) => {
   }
 
   const { username, command } = data;
+
+  if (!users[username]) {
+    return server.send("Unknown user", rinfo.port, rinfo.address);
+  }
+
+  const response = handleCommand(username, command, hasPermission);
+
+  server.send(response, rinfo.port, rinfo.address);
 });
