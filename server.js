@@ -3,7 +3,6 @@ const { handleCommand } = require("./fileCommands/fileCommands");
 
 const server = dgram.createSocket("udp4");
 
-const SERVER_IP = "127.0.0.1";
 const SERVER_PORT = 4444;
 
 const users = {
@@ -42,6 +41,6 @@ server.on("error", (err) => {
 });
 
 
-server.bind(SERVER_PORT, SERVER_IP, () => {
-  console.log(`Server running on ${SERVER_IP}:${SERVER_PORT}`);
+server.bind(SERVER_PORT, "0.0.0.0", () => {
+  console.log(`Server running on ${SERVER_PORT}`);
 });
