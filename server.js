@@ -36,3 +36,7 @@ server.on("message", (msg, rinfo) => {
 
   server.send(response, rinfo.port, rinfo.address);
 });
+
+server.bind(SERVER_PORT, SERVER_IP, () => {
+  console.log(`Server running on ${SERVER_IP}:${SERVER_PORT}`);
+});
