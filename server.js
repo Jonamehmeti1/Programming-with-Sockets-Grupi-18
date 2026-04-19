@@ -1,5 +1,5 @@
 const dgram = require("dgram");
-const { handleCommand } = require("./fileCommands");
+const { handleCommand } = require("./fileCommands/fileCommands");
 
 const server = dgram.createSocket("udp4");
 
@@ -37,6 +37,11 @@ server.on("message", (msg, rinfo) => {
   server.send(response, rinfo.port, rinfo.address);
 });
 
+server.on("error", (err) => {
+  console.error("Server error:", err);
+});
+
 server.bind(SERVER_PORT, SERVER_IP, () => {
-  console.log(`Server running on ${SERVER_IP}:${SERVER_PORT}`);
+  console.log("Server running on " + SERVER_IP + ":" + SERVER_PORT);
+  process.stdout.write("Ready for connections\n");
 });
