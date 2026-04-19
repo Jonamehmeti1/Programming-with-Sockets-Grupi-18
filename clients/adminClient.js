@@ -12,3 +12,25 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
+function askCommand() {
+  rl.question("ADMIN Command: ", (command) => {
+    const message = JSON.stringify({ username: USERNAME, command });
+
+    client.send(message, SERVER_PORT, SERVER_IP);
+
+    askCommand();
+  });
+}
+
+client.on("message", (msg) => {
+  console.log("\nServer:", msg.toString());
+});
+
+client.on("error", (err) => {
+  console.log("Error:", err.message);
+  client.close();
+});
+
+console.log("Logged in as ADMIN");
+askCommand();
