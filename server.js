@@ -41,7 +41,7 @@ server.on("error", (err) => {
   console.error("Server error:", err);
 });
 
+
 server.bind(SERVER_PORT, SERVER_IP, () => {
-  console.log("Server running on " + SERVER_IP + ":" + SERVER_PORT);
-  process.stdout.write("Ready for connections\n");
+  console.log(`Server running on ${SERVER_IP}:${SERVER_PORT}`);
 });
