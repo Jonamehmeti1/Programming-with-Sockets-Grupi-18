@@ -65,4 +65,24 @@ function handleCommand(username, commandLine, hasPermission) {
       return `ERROR: ${err.message}`;
     }
   }
+
+  if (command === "execute") {
+    if (!hasPermission(username, "execute")) {
+      return "ACCESS DENIED: No execute permission";
+    }
+
+    const sub = parts[1];
+
+    if (sub === "date") return new Date().toString();
+    if (sub === "list") {
+      const files = fs.readdirSync(SHARED_FOLDER);
+      return files.length ? files.join(", ") : "Folder is empty";
+    }
+
+    return "ERROR: Unknown execute command";
+  }
+
+  return "ERROR: Unknown command";
 }
+
+module.exports = { handleCommand };
