@@ -1,3 +1,19 @@
+const dgram = require("dgram");
+const readline = require("readline");
+
+const client = dgram.createSocket("udp4");
+
+const SERVER_IP = "127.0.0.1";
+const SERVER_PORT = 4444;
+
+const USERNAME = "guest1"; 
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+let waitingForResponse = false;
 
 function printHelp() {
   console.log("\n📖 AVAILABLE COMMANDS (READ-ONLY ACCESS):");
