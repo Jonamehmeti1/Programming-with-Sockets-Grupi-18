@@ -30,4 +30,39 @@ function handleCommand(username, commandLine, hasPermission) {
       return `ERROR: ${err.message}`;
     }
   }
+  if (command === "read") {
+    if (!hasPermission(username, "read")) {
+      return "ACCESS DENIED: No read permission";
+    }
+
+    const filename = parts[1];
+    if (!filename) return "ERROR: Missing filename";
+
+    try {
+      const content = fs.readFileSync(safeFilePath(filename), "utf8");
+      return `CONTENT:\n${content}`;
+    } catch (err) {
+      return `ERROR: ${err.message}`;
+    }
+  }
+
+  if (command === "write") {
+    if (!hasPermission(username, "write")) {
+      return "ACCESS DENIED: No write permission";
+    }
+
+    const filename = parts[1];
+    const text = parts.slice(2).join(" ");
+
+    if (!filename || !text) {
+      return "ERROR: write filename.txt text";
+    }
+
+    try {
+      fs.writeFileSync(safeFilePath(filename), text, "utf8");
+      return `SUCCESS: Written to ${filename}`;
+    } catch (err) {
+      return `ERROR: ${err.message}`;
+    }
+  }
 }
